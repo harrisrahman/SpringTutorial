@@ -6,10 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import tacos.domain.Ingredient;
 
 import java.util.ArrayList;
@@ -18,24 +15,39 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import tacos.domain.Ingredient.Type;
+import tacos.domain.Order;
 import tacos.domain.Taco;
 import tacos.repository.IngredientRepository;
+import tacos.repository.TacoRepository;
 
 import javax.validation.Valid;
 
 @Controller
 @RequestMapping(path = "/design")
+@SessionAttributes("order")
 public class DesignTacoController {
 
+    Logger logger = LoggerFactory.getLogger(DesignTacoController.class);
 
     private final IngredientRepository repository;
+    private final TacoRepository tacoRepository;
 
-    @Autowired
-    public DesignTacoController(IngredientRepository ingredientRepository) {
-        repository = ingredientRepository;
+
+    @ModelAttribute
+    public Order order(){
+        return new Order();
     }
 
-    Logger logger = LoggerFactory.getLogger(DesignTacoController.class);
+    @ModelAttribute
+    public Taco taco(){
+        return new Taco();
+    }
+
+    @Autowired
+    public DesignTacoController(IngredientRepository repository, TacoRepository tacoRepository) {
+        this.repository = repository;
+        this.tacoRepository = tacoRepository;
+    }
 
     private void initializeModel(Model model){
 //        List<Ingredient> ingredientList = Arrays.asList(
@@ -70,13 +82,17 @@ public class DesignTacoController {
     }
 
     @PostMapping()
-    public String processDesign(@Valid @ModelAttribute(value="tacoDesign") Taco design, BindingResult bindingResult, Model model) {
+    public String processDesign(@Valid @ModelAttribute(value="tacoDesign") Taco design,
+                                BindingResult bindingResult, Model model,
+                                @ModelAttribute Order order) {
         if (bindingResult.hasErrors()) {
             logger.info("** Has validation errors **" + design);
             initializeModel(model);
             return "design";
         }
         logger.info("** In Processing design *******" + design);
+        Taco taco = tacoRepository.save(design);
+        order.addDesign(design);
         return "redirect:/orders/current/";
     }
 }
