@@ -75,7 +75,7 @@ public class DesignTacoController {
     }
 
     @GetMapping()
-    public String showDesignForm(@ModelAttribute(value="tacoDesign") Taco tacoDesign, Model model) {
+    public String showDesignForm(Taco taco, Model model) {
         logger.info("** In Design Form *******");
         initializeModel(model);
         return "design";

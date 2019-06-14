@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import java.util.Date;
@@ -21,6 +22,7 @@ public class Ingredient {
     private final String name;
     private final Type type;
 
+    @Column(name = "createdAt")
     private Date createdAt;
 
     public static enum Type {
