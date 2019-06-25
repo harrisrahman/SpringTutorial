@@ -6,6 +6,10 @@
 </head>
 <body>
 
+<form action="@{/logout}" method="post">
+    <input type="submit" value="Logout"/>
+</form>
+
 <form method="post" th:action="@{/orders}" th:object="${order}">
     <h1>Order Your Taco Creation</h1>
     <img th:src="@{/images/TacoCloud.png}"/>
