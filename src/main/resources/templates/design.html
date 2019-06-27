@@ -14,6 +14,7 @@
 <img th:src="@{/images/TacoCloud.png}"/>
 
 <form method="post" th:object="${taco}" th:action="@{/design}">
+    <span th:if="${#fields.hasErrors('ingredients')}" th:errors="*{ingredients}">INGRIDIENT ERROR</span>
     <div class="grid">
         <div class="ingredient-group" id="wraps">
             <h3>Designate your Wrap</h3>
@@ -21,6 +22,7 @@
                 <input name="ingredients" type="checkbox" th:value="${ingredient.id}">
                 <span th:text="${ingredient.name}">INGREDIENT</span><br/>
             </div>
+
         </div>
         <div class="ingredient-group" id="proteins">
             <h3>Pick your Protein</h3>

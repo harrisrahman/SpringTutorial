@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 import tacos.domain.Ingredient;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -50,28 +49,13 @@ public class DesignTacoController {
     }
 
     private void initializeModel(Model model){
-//        List<Ingredient> ingredientList = Arrays.asList(
-//                new Ingredient("FLTO", "Flour Tortilla", Type.WRAP),
-//                new Ingredient("COTO", "Corn Tortilla", Type.WRAP),
-//                new Ingredient("GRBF", "Ground Beef", Type.PROTIEN),
-//                new Ingredient("CARN", "Carnitas", Type.PROTIEN),
-//                new Ingredient("TMTO", "Tomatoes", Type.VEGGIES),
-//                new Ingredient("LETC", "Lettuce", Type.VEGGIES),
-//                new Ingredient("CHED", "Cheddar", Type.CHEESE),
-//                new Ingredient("JACK", "Monterry Jack", Type.CHEESE),
-//                new Ingredient("SLSA", "Salsa", Type.SAUCE),
-//                new Ingredient("SRCR", "Sour Cream", Type.SAUCE));
-
         List<Ingredient> ingredientList = new ArrayList<>();
         repository.findAll().forEach(ing -> ingredientList.add(ing));
-
         logger.info("** Model initialization *******");
-
         for (Type type : Type.values()) {
             model.addAttribute(type.toString().toLowerCase(), ingredientList.stream().
                     filter(ingredient -> ingredient.getType().name().equalsIgnoreCase(type.name())).collect(Collectors.toList()));
         }
-
     }
 
     @GetMapping()
@@ -82,17 +66,19 @@ public class DesignTacoController {
     }
 
     @PostMapping()
-    public String processDesign(@Valid @ModelAttribute(value="tacoDesign") Taco design,
+    public String processDesign(@Valid Taco taco,
                                 BindingResult bindingResult, Model model,
                                 @ModelAttribute Order order) {
+
         if (bindingResult.hasErrors()) {
-            logger.info("** Has validation errors **" + design);
+            logger.info("** Has validation errors **" + taco);
             initializeModel(model);
             return "design";
         }
-        logger.info("** In Processing design *******" + design);
-        Taco taco = tacoRepository.save(design);
-        order.addDesign(design);
+
+        logger.info("** In Processing design *******" + taco);
+        Taco taco1 = tacoRepository.save(taco);
+        order.addDesign(taco1);
         return "redirect:/orders/current/";
     }
 }
