@@ -1,12 +1,3 @@
-delete from Ingredient;
-delete from Taco;
-delete from Taco_Ingredients;
-delete from Taco_Ingredients;
-delete from Taco_Ingredients;
-delete from Taco_order;
-delete from Taco_Order_Tacos;
-
-
 insert into Ingredient(id,name,type,createdAt)
         values('FLTO', 'Flour Tortilla', 0,CURRENT_TIMESTAMP());
         --values('FLTO', 'Flour Tortilla', 'WRAP',CURRENT_TIMESTAMP());

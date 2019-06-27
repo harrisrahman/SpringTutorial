@@ -13,12 +13,12 @@ import java.util.List;
 @Entity
 public class Taco {
     @NotNull
-    @Size(min = 5, message = "Atleast 5 characters")
+    @Size(min = 5, message = "At least 5 characters")
     private String name;
 
-    @Size(min = 1, message = "Select atleast one ingredient")
+    @Size(min = 1, message = "Select at least 1 ingredient")
     @ManyToMany(targetEntity = Ingredient.class)
-    private List<String> ingredients;
+    private List<Ingredient> ingredients;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
