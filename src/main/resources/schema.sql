@@ -49,7 +49,7 @@ alter table Taco_Order_Tacos
 create table if not exists User(
         id bigint NOT NULL AUTO_INCREMENT,
         username varchar(50),
-        password varchar(50),
+        password varchar(300),
         fullname varchar(50),
         street varchar(30),
         city varchar(20),

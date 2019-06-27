@@ -18,12 +18,12 @@
     New Here ? Click <a th:href="@{/register}">here</a> to register
 </p>
 
-<form method="post" th:action="@{/login}">
+<form method="POST" th:action="@{/login}">
     <label for="username">Username :</label>
-    <input type="text" value="username"/><br/>
+    <input type="text" name="username"/><br/>
 
     <label for="password">Password :</label>
-    <input type="text" value="password"/><br/>
+    <input type="text" name="password"/><br/>
 
     <input type="submit" value="Login">
 </form>

@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!--suppress ALL -->
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
@@ -12,7 +13,7 @@
 
 <img th:src="@{/images/TacoCloud.png}"/>
 
-<form method="post" th:object="${taco}">
+<form method="post" th:object="${taco}" th:action="@{/design}">
     <div class="grid">
         <div class="ingredient-group" id="wraps">
             <h3>Designate your Wrap</h3>
